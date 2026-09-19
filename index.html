@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070c1d" />
+    <title>J△Mㅇ//BRㅌACH — Signal Run</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand-lockup" aria-label="Jamo Breach">
+          <div class="brand-mark" aria-hidden="true"><span>△</span><span>ㅇ</span></div>
+          <div>
+            <p class="eyebrow">CIPHER DIVER // FIELD TEST</p>
+            <h1>J△Mㅇ<span>//</span>BRㅌACH</h1>
+          </div>
+        </div>
+        <div class="bag-config">
+          <label for="bag-preset">Signal Bag</label>
+          <select id="bag-preset" aria-label="Choose a Signal Bag preset">
+            <option value="balanced">Balanced</option>
+            <option value="vowel-rich">Vowel-rich</option>
+          </select>
+          <button id="restart-btn" class="icon-button" type="button" aria-label="Restart this run" title="Restart run">↻</button>
+        </div>
+      </header>
+
+      <main class="game-layout">
+        <section class="play-column" aria-label="Word building play area">
+          <div class="run-status">
+            <div class="round-copy">
+              <div class="eyebrow">LIVE TRANSMISSION</div>
+              <div class="round-title"><span id="round-label">ROUND 1</span><span class="round-divider">/</span><span class="muted">03</span></div>
+            </div>
+            <div class="round-steps" aria-label="Round progress">
+              <span class="round-step is-current" id="step-1">01</span>
+              <span class="step-line"></span>
+              <span class="round-step" id="step-2">02</span>
+              <span class="step-line"></span>
+              <span class="round-step" id="step-3">03</span>
+            </div>
+            <div class="score-display">
+              <span class="eyebrow">CUMULATIVE SCORE</span>
+              <strong><span id="score-value">0</span><span class="score-slash">/</span><span id="target-value">72</span></strong>
+            </div>
+          </div>
+
+          <div class="target-track" aria-label="Cumulative target progress">
+            <div id="target-progress" class="target-progress"></div>
+          </div>
+
+          <div class="play-meta">
+            <div class="plays-readout">
+              <span class="meta-label">PLAYS REMAINING</span>
+              <strong id="plays-value">9</strong><span class="muted"> / 09</span>
+            </div>
+            <div class="status-pill" id="run-state"><span class="status-dot"></span> SIGNAL STABLE</div>
+          </div>
+
+          <section class="panel protocols-panel" aria-labelledby="protocols-heading">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">PASSIVE LAYER</span>
+                <h2 id="protocols-heading">Active protocols</h2>
+              </div>
+              <span class="micro-badge" id="protocol-count">0 ONLINE</span>
+            </div>
+            <div id="protocol-list" class="protocol-list">
+              <div class="empty-protocol">Choose a booster after Round 1.</div>
+            </div>
+          </section>
+
+          <section class="panel assembly-panel" aria-labelledby="assembly-heading">
+            <div class="section-heading assembly-heading">
+              <div>
+                <span class="section-kicker">ASSEMBLY BUFFER</span>
+                <h2 id="assembly-heading">Build a signal</h2>
+              </div>
+              <div id="validity-state" class="validity-state is-idle"><span class="validity-icon">○</span> Awaiting input</div>
+            </div>
+            <div id="assembly-word" class="assembly-word" aria-live="polite"><span class="assembly-placeholder">Select jamo from the board</span></div>
+            <div id="score-breakdown" class="score-breakdown" aria-live="polite">
+              <span>Select a recognized word to preview its score.</span>
+            </div>
+            <div class="suggestion-row">
+              <span class="suggestion-label">AVAILABLE SIGNALS <strong id="available-count">0</strong></span>
+              <div id="suggestion-list" class="suggestion-list"></div>
+            </div>
+          </section>
+
+          <section class="panel board-panel" aria-labelledby="board-heading">
+            <div class="section-heading board-heading">
+              <div>
+                <span class="section-kicker">LIVE FIELD // 04×04</span>
+                <h2 id="board-heading">Jamo board</h2>
+              </div>
+              <span class="micro-badge cyan">TAP IN ORDER</span>
+            </div>
+            <div id="board" class="board-grid" aria-label="Jamo selection board"></div>
+            <div class="board-footer">
+              <span><span class="legend-dot normal"></span> normal signal</span>
+              <span><span class="legend-dot selected"></span> selected</span>
+              <span class="board-note">Unused tiles persist until consumed.</span>
+            </div>
+          </section>
+
+          <div class="action-row">
+            <button id="clear-btn" class="secondary-button" type="button">Clear selection <span class="keycap">Esc</span></button>
+            <button id="submit-btn" class="submit-button" type="button" disabled>Transmit word <span class="submit-word" id="submit-word"></span><span class="keycap">↵</span></button>
+          </div>
+          <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+        </section>
+
+        <aside class="side-column" aria-label="Run telemetry">
+          <section class="panel telemetry-panel">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">DIVE TELEMETRY</span>
+                <h2>Run details</h2>
+              </div>
+              <span class="signal-icon" aria-hidden="true">◈</span>
+            </div>
+            <div class="telemetry-grid">
+              <div class="telemetry-cell"><span class="telemetry-label">ROUND PLAYS</span><strong id="round-plays-value">0 / 3</strong></div>
+              <div class="telemetry-cell"><span class="telemetry-label">WORDS SENT</span><strong id="words-value">0</strong></div>
+              <div class="telemetry-cell"><span class="telemetry-label">BEST WORD</span><strong id="best-word-value">—</strong></div>
+              <div class="telemetry-cell"><span class="telemetry-label">BAG UNITS</span><strong id="bag-units-value">0</strong></div>
+            </div>
+            <div class="mini-history" id="history" aria-label="Recent transmissions">
+              <div class="history-empty">Your transmissions will appear here.</div>
+            </div>
+          </section>
+
+          <section class="panel bag-panel" aria-labelledby="bag-heading">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">PROBABILITY CONTROL</span>
+                <h2 id="bag-heading">Signal bag</h2>
+              </div>
+              <span class="micro-badge" id="bag-preset-label">BALANCED</span>
+            </div>
+            <p class="panel-copy" id="bag-description">A visible practice bag keeps the next draws teachable.</p>
+            <div class="bag-total"><span>REMAINING UNITS</span><strong id="bag-total">0</strong></div>
+            <div class="bag-bars" id="bag-bars"></div>
+            <div class="bag-exact" id="bag-exact" aria-label="Exact remaining jamo"></div>
+          </section>
+
+          <section class="panel word-log-panel" aria-labelledby="word-log-heading">
+            <div class="section-heading">
+              <div>
+                <span class="section-kicker">DICTIONARY LINK</span>
+                <h2 id="word-log-heading">Field notes</h2>
+              </div>
+              <span class="micro-badge violet">CURATED</span>
+            </div>
+            <p class="panel-copy">Common modern Korean words for this first local slice. Meaning appears after a successful transmission.</p>
+            <div class="word-log" id="word-log"></div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <div id="booster-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="booster-title">
+      <div class="modal-card booster-card">
+        <div class="modal-topline"><span class="eyebrow">ROUND BREAK // DRAFT 01</span><span class="modal-glyph">✦</span></div>
+        <h2 id="booster-title">Choose a protocol</h2>
+        <p>One passive layer stays online for the rest of this dive.</p>
+        <div id="booster-options" class="booster-options"></div>
+      </div>
+    </div>
+
+    <div id="run-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="run-modal-title">
+      <div class="modal-card result-card">
+        <div id="result-eyebrow" class="eyebrow">TRANSMISSION COMPLETE</div>
+        <div id="result-seal" class="result-seal">◈</div>
+        <h2 id="run-modal-title">Signal breached</h2>
+        <p id="result-copy"></p>
+        <div class="result-score"><span>FINAL SCORE</span><strong id="result-score-value">0</strong></div>
+        <button id="result-restart-btn" class="submit-button" type="button">Run it again <span>↻</span></button>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
